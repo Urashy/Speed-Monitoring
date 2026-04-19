@@ -1,12 +1,19 @@
-package com.berkan.speed_monitor.model; 
+package com.berkan.speed_monitor.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SpeedRecord {
 
     @Id
@@ -17,49 +24,4 @@ public class SpeedRecord {
     private double uploadSpeedMbps;
     private int pingMs;
     private LocalDateTime timestamp;
-
-    public SpeedRecord() {
-    }
-
-    // --- GETTERS ET SETTERS ---
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public double getDownloadSpeedMbps() {
-        return downloadSpeedMbps;
-    }
-
-    public void setDownloadSpeedMbps(double downloadSpeedMbps) {
-        this.downloadSpeedMbps = downloadSpeedMbps;
-    }
-
-    public double getUploadSpeedMbps() {
-        return uploadSpeedMbps;
-    }
-
-    public void setUploadSpeedMbps(double uploadSpeedMbps) {
-        this.uploadSpeedMbps = uploadSpeedMbps;
-    }
-
-    public int getPingMs() {
-        return pingMs;
-    }
-
-    public void setPingMs(int pingMs) {
-        this.pingMs = pingMs;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
 }

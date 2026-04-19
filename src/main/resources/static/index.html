@@ -34,9 +34,42 @@
         </div>
     </div>
 
+    <div class="row mb-4" id="statsCards">
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm border-success">
+                <div class="card-body">
+                    <h6 class="text-muted">Moy. Download</h6>
+                    <p class="fs-4 fw-bold text-success mb-0" id="avgDl">—</p>
+                    <small class="text-muted">Mbps</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm border-primary">
+                <div class="card-body">
+                    <h6 class="text-muted">Moy. Upload</h6>
+                    <p class="fs-4 fw-bold text-primary mb-0" id="avgUl">—</p>
+                    <small class="text-muted">Mbps</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm border-warning">
+                <div class="card-body">
+                    <h6 class="text-muted">Moy. Ping</h6>
+                    <p class="fs-4 fw-bold text-warning mb-0" id="avgPing">—</p>
+                    <small class="text-muted">ms</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card shadow-sm">
         <div class="card-body">
-            <h5 class="card-title">Historique des mesures</h5>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="card-title mb-0">Historique des mesures</h5>
+                <a href="/api/speedtests/export" class="btn btn-outline-secondary btn-sm">⬇ Exporter CSV</a>
+            </div>
             <table class="table table-hover mt-3">
                 <thead class="table-light">
                     <tr>
@@ -46,8 +79,7 @@
                         <th>Ping (ms)</th>
                     </tr>
                 </thead>
-                <tbody id="recordsTable">
-                    </tbody>
+                <tbody id="recordsTable"></tbody>
             </table>
         </div>
     </div>
@@ -96,9 +128,20 @@
 
         document.getElementById('speedForm').reset();
         chargerDonnees();
+        chargerMoyennes();
     });
 
+    async function chargerMoyennes() {
+        const reponse = await fetch('/api/speedtests/average');
+        const stats = await reponse.json();
+        if (stats.count === 0) return;
+        document.getElementById('avgDl').textContent   = stats.avgDownloadMbps.toFixed(1);
+        document.getElementById('avgUl').textContent   = stats.avgUploadMbps.toFixed(1);
+        document.getElementById('avgPing').textContent = stats.avgPingMs.toFixed(0);
+    }
+
     chargerDonnees();
+    chargerMoyennes();
 </script>
 
 </body>
